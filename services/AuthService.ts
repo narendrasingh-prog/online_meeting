@@ -57,10 +57,13 @@ export class AuthService {
       message: "user logged in successfully",
     };
   }
-  async signOut(): Promise<{ error: AuthError | null }> {
+  async signOut(): Promise<{ error: boolean }> {
     const { error } = await this.supabase.auth.signOut();
+    if(error){
+      return {error:true}
+    }
     return {
-      error,
+      error:true
     };
   }
   async getUsers(): Promise<User | null> {

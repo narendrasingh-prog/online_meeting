@@ -22,7 +22,7 @@ import { useAuth } from "@/contexts/AuthContext";
 const Navbar = () => {
   const router = useRouter();
   const supabase = AuthService.Client();
-const {user} =useAuth();
+  const { user } = useAuth();
   const handleLogout = async () => {
     const res = await supabase.signOut();
     if (res.error) {
@@ -32,7 +32,6 @@ const {user} =useAuth();
       router.replace("/auth/login");
     }
   };
-
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -46,16 +45,13 @@ const {user} =useAuth();
       Notification.requestPermission().then(async (permission) => {
         if (permission === "granted") {
           await subscribeToPush(user?.id ?? "");
-        
+
           toast.success("Notifications enabled");
         } else if (permission === "denied") {
-         
           toast.error("Notifications blocked");
         }
       });
     }
-
-   
   }, []);
   return (
     <nav className="flex flex-between fixed z-50 w-full px-6 py-5 lg:px-10 bg-slate-800">
@@ -77,14 +73,11 @@ const {user} =useAuth();
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuGroup>
-              <DropdownMenuItem onSelect={() => router.push("/profile")}>
-                Profile
+              <DropdownMenuItem asChild>
+                <Link href={"/profile"}>Profile</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem
-                onSelect={() => router.push("/auth/login?add-account=true")}
-              >
-                {" "}
-                Add account +
+              <DropdownMenuItem asChild>
+                <Link href={"/auth/login?add-account=true"} target="_blank" >Add account +</Link>
               </DropdownMenuItem>
               <DropdownMenuItem onSelect={handleLogout}>
                 Log out

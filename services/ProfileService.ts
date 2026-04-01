@@ -1,5 +1,5 @@
 import { SupabaseClient } from "@supabase/supabase-js";
-import { FileUpload } from "./FileUpload";
+import { FileUpload } from "./StorageService";
 import { SupabaseService } from "@/lib/supabase/SupabaseService";
 import { ApiError, ApiResponse } from "@/types/ApiResponse";
 import { UserProfile } from "@/dto/Profiletype";

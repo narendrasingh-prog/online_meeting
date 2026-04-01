@@ -141,7 +141,7 @@ export function LoginForm({
                   const isDisabled =
                     isSubmitting ||
                     !email.trim() ||
-                    password.trim().length <= 6;
+                    password.trim().length < 6;
                   return (
                     <Button
                       type="submit"

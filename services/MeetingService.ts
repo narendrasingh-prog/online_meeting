@@ -7,7 +7,7 @@ import type {
 } from "../dto/Meetingtype";
 import type { ApiResponse, ApiError } from "../types/ApiResponse";
 
-import { FileUpload } from "./FileUpload";
+import { FileUpload } from "./StorageService";
 import type {
   GetChats,
   GetUsers,
