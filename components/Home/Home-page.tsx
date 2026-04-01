@@ -2,7 +2,7 @@
 import React, { Suspense } from "react";
 
 import { Meeting } from "@/dto/Meetingtype";
-import LatestMeeting from "./LatestMeeting/Latest-meeting";
+import LatestMeeting from "./LatestMeeting/LatestMeeting";
 import MeetingList from "./Meeting-list";
 import { useQuery } from "@tanstack/react-query";
 import { MeetingService } from "@/services/MeetingService";
@@ -44,16 +44,15 @@ const HomePage = ({ latestmeeting, livemeeting }: HomePageProps) => {
       return res.success ? res.data : null;
     },
     initialDataUpdatedAt: livemeeting ? Date.now() : undefined,
-
     initialData: livemeeting,
     refetchOnWindowFocus: false,
   });
 
   return (
     <section className="flex size-full flex-col gap-10 text-white">
-      <div className="h-[300px] w-full rounded-[20px] bg-hero bg-cover">
+      
         <LatestMeeting meeting={latestMeet} />
-      </div>
+      
       <MeetingList />
       <Suspense fallback={<h1>live meetings loading...</h1>}>
         <LiveMeeting meeting={liveMeetings} />

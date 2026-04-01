@@ -1,16 +1,19 @@
-'use client';
+"use client";
 
-import React, { memo } from 'react';
-import { Meeting } from '@/dto/Meetingtype';
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'sonner';
+import React, { memo } from "react";
+import { Meeting } from "@/dto/Meetingtype";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
-const LiveMeetingItem = memo(function LiveMeetingItem({ meet, meetingService, router }: {
+const LiveMeetingItem = memo(function LiveMeetingItem({
+  meet,
+  meetingService,
+  router,
+}: {
   meet: Meeting;
   meetingService: any;
   router: any;
 }) {
-
   const joinCreatedMeeting = useMutation({
     mutationFn: async () => {
       const res = await meetingService.joinYourCreatedMeeting({
@@ -22,12 +25,14 @@ const LiveMeetingItem = memo(function LiveMeetingItem({ meet, meetingService, ro
 
     onSuccess: (data) => {
       toast.success("Joining meeting…");
-      router.replace(`meeting/${encodeURIComponent(data.meetings.meetinglink)}`);
+      router.replace(
+        `meeting/${encodeURIComponent(data.meetings.meetinglink)}`,
+      );
     },
 
     onError: () => {
       toast.error("Error joining meeting");
-    }
+    },
   });
 
   return (

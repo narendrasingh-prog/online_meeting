@@ -13,25 +13,25 @@ const PreviousMeeting = () => {
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const { ref: bottomRef, inView } = useInView({ threshold: 0 });
 
-
   const {
     data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
     isLoading,
+    refetch,
     error,
   } = useLazyLoading<MeetingPagination<Meeting>>({
     queryKey: ["previousmeetings"],
     initialPageParam: 1,
 
     fetchFn: async (pageParam) => {
-      const res = await meetingService.getAllCreatedMeeting({ 
+      const res = await meetingService.getAllCreatedMeeting({
         p_limit: 8,
         p_page: pageParam,
       });
       if (!res.success) throw new Error("Cannot fetch meetings");
-      return res.data; 
+      return res.data;
     },
 
     getNextPageParam: (lastPage) => {
@@ -44,7 +44,7 @@ const PreviousMeeting = () => {
     },
     refetchOnWindowFocus: false,
 
-  refetchOnMount: false,
+    refetchOnMount: false,
   });
 
   React.useEffect(() => {
@@ -54,15 +54,28 @@ const PreviousMeeting = () => {
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   // if (isLoading) return <div>Loading meetings...</div>;
-  if (error) return <div>Error loading meetings</div>;
+  if (error)
+    return (
+      <div className="flex flex-col justify-center ">
+        <button
+          className="bg-blue-600 rounded-md px-6 py-3 text-center mx-auto my-8"
+          onClick={() => refetch()}
+        >
+          refresh{" "}
+        </button>
+        <div className="text-center">
+          something went wrong while fetching previous meeting.
+        </div>
+      </div>
+    );
 
   const meetings = data?.pages.flatMap((page) => page.meetings) ?? [];
 
   return (
     <div ref={scrollRef} className="overflow-y-auto no-scrollbar">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Suspense fallback={<LoadingPrevious/>}>
-        <MeetingCard meetings={meetings} />
+        <Suspense fallback={<LoadingPrevious />}>
+          <MeetingCard meetings={meetings} />
         </Suspense>
       </div>
 
@@ -74,7 +87,9 @@ const PreviousMeeting = () => {
           <p className="text-center text-sm text-gray-500">No more meetings</p>
         )}
         {!isLoading && meetings.length === 0 && (
-          <p className="text-center text-sm text-gray-500">No previous meetings</p>
+          <p className="text-center text-sm text-gray-500">
+            No previous meetings
+          </p>
         )}
       </div>
     </div>
