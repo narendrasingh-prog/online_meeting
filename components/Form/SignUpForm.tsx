@@ -19,8 +19,8 @@ import { useForm } from "@tanstack/react-form";
 import { AuthSchema } from "@/types/Auth";
 import { AuthService } from "@/services/AuthService";
 import { toast } from "sonner";
-import { memo } from "react";
-import FormError from "./Error/Form-error";
+
+import FormError from "../Error/Form-error";
 
 export function SignUpForm({
   className,
@@ -49,7 +49,7 @@ export function SignUpForm({
     },
   });
 
-  const LoginLink = memo(() => {
+  const LoginLink = () => {
     return (
       <div className="mt-4 text-center text-sm">
         Already have an account?{" "}
@@ -58,7 +58,7 @@ export function SignUpForm({
         </Link>
       </div>
     );
-  });
+  };
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -140,7 +140,9 @@ export function SignUpForm({
               >
                 {({ isSubmitting, email, password }) => {
                   const isDisabled =
-                    isSubmitting || !email.trim() || password.trim().length < 6;
+                    isSubmitting ||
+                    !email.trim() ||
+                    password.trim().length <= 6;
 
                   return (
                     <Button
