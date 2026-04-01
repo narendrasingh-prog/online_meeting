@@ -4,7 +4,7 @@ import React, { Suspense } from 'react'
 
 import { MeetingService } from '@/services/MeetingService';
 import LoadingPage from './loading';
-import HomePage from '@/components/Home/Home-page';
+import HomePage from '@/components/home/HomePage';
 
 
 const Home = async () => {

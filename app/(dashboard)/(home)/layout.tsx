@@ -1,7 +1,7 @@
 import React, { ReactNode, Suspense } from "react";
 
 import QueryProvider from "@/contexts/provider";
-import Navbar from "@/components/Navbar/Navbar";
+import Navbar from "@/components/navbar/Navbar";
 import Sidebar from "@/components/Sidebar";
 import { ThemeProvider } from "next-themes";
 import "../../globals.css";

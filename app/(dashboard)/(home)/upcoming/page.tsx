@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 
-import UpcomingMeeting from '@/components/Home/Upcoming-meeting'
+import UpcomingMeeting from '@/components/home/UpcomingMeeting'
 import LoadingUpcoming from './loading'
 
 const Upcomming = () => {

@@ -3,7 +3,8 @@ import React, { memo, useMemo } from 'react';
 import { Meeting } from '@/dto/Meetingtype';
 import { MeetingService } from '@/services/MeetingService';
 import { useRouter } from 'next/navigation';
-import LiveMeetingItem from "./Live-meeting-item";
+import LiveMeetingItem from './LiveMeetingItem';
+
 
 interface LiveMeetingProps {
   meeting: Meeting[] | null;

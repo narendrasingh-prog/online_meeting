@@ -1,6 +1,6 @@
 'use server'
 import React, { Suspense } from 'react'
-import Profile from '@/components/Profile/Profile'
+import Profile from '@/components/profile/Profile'
 import { ProfileService } from '@/services/ProfileService';
 import UserLoading from './loading';
 

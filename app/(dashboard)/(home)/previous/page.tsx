@@ -1,4 +1,4 @@
-import PreviousMeeting from "@/components/Home/Previous-meeting";
+import PreviousMeeting from "@/components/home/PreviousMeeting";
 import { Suspense } from "react";
 import LoadingPrevious from "./loading";
 

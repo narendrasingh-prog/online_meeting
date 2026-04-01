@@ -6,7 +6,7 @@ import { QueryClient } from "@tanstack/react-query";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { notFound } from "next/navigation";
 
-import MeetingPage from "@/components/MeetingPage/Meeting-page";
+import MeetingPage from "@/components/meetingpage/Meeting-page";
 import { redirect } from "next/navigation";
 
 
@@ -62,7 +62,7 @@ const Meeting = async ({ params }: PageParams) => {
     queryKey: ["meeting-chats", meetingId],
     queryFn: async ({ pageParam = 1 }) => {
       const res = await meetingService.getChats({
-        limit: 4,
+        limit: 6,
         meetingid: meetingId,
         page: pageParam as number,
       });

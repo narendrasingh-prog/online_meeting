@@ -3,13 +3,13 @@ import React, { Suspense } from "react";
 
 import { Meeting } from "@/dto/Meetingtype";
 import LatestMeeting from "./LatestMeeting/LatestMeeting";
-import MeetingList from "./Meeting-list";
+import MeetingList from "./MeetingList";
 import { useQuery } from "@tanstack/react-query";
 import { MeetingService } from "@/services/MeetingService";
 import { useAuth } from "@/contexts/AuthContext";
 
 import Link from "next/link";
-import LiveMeeting from "./LiveMeeting/Live-meeting";
+import LiveMeeting from "./LiveMeeting/LiveMeeting";
 
 interface HomePageProps {
   latestmeeting: Meeting | null;
