@@ -1,5 +1,7 @@
-import { Meeting } from "@/dto/Meetingtype";
+"use client";
+
 import React, { useEffect, useMemo, useState } from "react";
+import { Meeting } from "@/dto/Meetingtype";
 interface MeetingTimeProps {
   meeting: Meeting;
   onleave:()=>void

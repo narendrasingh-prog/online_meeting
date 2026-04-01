@@ -1,4 +1,4 @@
-'user server'
+'use server'
 import { AuthService } from '@/services/AuthService'
 
 const Personal = async() => {

@@ -1,8 +1,8 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext } from "react";
 
-import { Session, User } from "@supabase/supabase-js";
+import { User } from "@supabase/supabase-js";
 
 type AuthContextType = {
   user: User | null;
@@ -16,11 +16,10 @@ type AuthProviderProps = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children, initialUser }: AuthProviderProps) => {
-  const [user, setUser] = useState<User | null>(initialUser);
-  const [loading, setLoading] = useState(!initialUser);
-
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user: initialUser }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

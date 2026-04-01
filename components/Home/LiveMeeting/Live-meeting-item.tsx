@@ -4,6 +4,7 @@ import React, { memo } from "react";
 import { Meeting } from "@/dto/Meetingtype";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { formatTime } from "@/lib/utils";
 
 const LiveMeetingItem = memo(function LiveMeetingItem({
   meet,
@@ -40,10 +41,10 @@ const LiveMeetingItem = memo(function LiveMeetingItem({
       <h2 className="text-lg font-semibold mb-2">{meet.meetingtitle}</h2>
 
       <p className="text-sm text-gray-600">
-        Start Time: {new Date(meet.starttime).toLocaleString()}
+        Start Time: {formatTime(meet.starttime)}
       </p>
       <p className="text-sm text-gray-600">
-        End Time: {new Date(meet.endtime).toLocaleString()}
+        End Time: {formatTime(meet.endtime)}
       </p>
 
       <button
