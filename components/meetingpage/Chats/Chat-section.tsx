@@ -56,10 +56,13 @@ const ChatImage = ({ src }: { src: string }) => {
 function ChatSection({ meeting }: ChatSectionProps) {
   const supabase = useMemo(() => SupabaseService.browser(), []);
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
+  const [scrollRoot, setScrollRoot] = React.useState<HTMLDivElement | null>(
+    null,
+  );
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const { ref: topRef, inView } = useInView({
-    root: scrollRef.current,
+    root: scrollRoot,
     threshold: 0,
   });
 
@@ -141,8 +144,13 @@ function ChatSection({ meeting }: ChatSectionProps) {
     };
   }, [meeting.id]);
 
-
 const isLoadingRef = React.useRef(false);
+
+useEffect(() => {
+  if (scrollRef.current) {
+    setScrollRoot(scrollRef.current);
+  }
+}, []);
 
 useEffect(() => {
   if (!inView) return;
@@ -152,7 +160,6 @@ useEffect(() => {
   isLoadingRef.current = true;
 
   fetchChatNextPage().finally(() => {
-    // small delay prevents rapid double triggers
     setTimeout(() => {
       isLoadingRef.current = false;
     }, 300);
