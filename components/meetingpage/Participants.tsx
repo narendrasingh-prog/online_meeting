@@ -1,6 +1,6 @@
 "use client";
 
-import { Meeting } from "@/dto/Meetingtype";
+import { Meeting } from "@/dto/Meeting";
 import { MeetingService } from "@/services/MeetingService";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useState } from "react";

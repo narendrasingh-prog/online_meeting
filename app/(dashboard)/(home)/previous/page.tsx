@@ -3,7 +3,7 @@ import { InfiniteData } from "@tanstack/react-query";
 import PreviousMeeting from "@/components/home/PreviousMeeting";
 import LoadingPrevious from "./loading";
 import { MeetingService } from "@/services/MeetingService";
-import { Meeting, MeetingPagination } from "@/dto/Meetingtype";
+import { Meeting, MeetingPagination } from "@/dto/Meeting";
 
 const Previous = async () => {
   const meetingService = await MeetingService.Server();

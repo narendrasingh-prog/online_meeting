@@ -1,11 +1,11 @@
 "use client";
+import React, { memo, useMemo, useRef } from "react";
 
-import { Meeting } from "@/dto/Meetingtype";
+import { Meeting } from "@/dto/Meeting";
 import { SupabaseService } from "@/lib/supabase/SupabaseService";
 import { MeetingService } from "@/services/MeetingService";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { memo, useMemo, useRef } from "react";
 import { toast } from "sonner";
 
 interface SendMessageProps {

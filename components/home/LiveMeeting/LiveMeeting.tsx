@@ -1,6 +1,6 @@
 'use client';
 import React, { memo, useMemo } from 'react';
-import { Meeting } from '@/dto/Meetingtype';
+import { Meeting } from '@/dto/Meeting';
 import { MeetingService } from '@/services/MeetingService';
 import { useRouter } from 'next/navigation';
 import LiveMeetingItem from './LiveMeetingItem';

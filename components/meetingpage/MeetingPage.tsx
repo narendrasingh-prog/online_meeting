@@ -2,14 +2,14 @@
 
 import React, { Fragment, Suspense, useEffect, useRef, useState } from "react";
 import Participants from "./Participants";
-import MeetingDetails from "./Meeting-details";
-import { Meeting } from "@/dto/Meetingtype";
+import MeetingDetails from "./MeetingDetails";
+import { Meeting } from "@/dto/Meeting";
 import { MeetingService } from "@/services/MeetingService";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import LeaveMeeting from "./Leave-meeting";
-import ChatWrapper from "./Chats/ChatWrapper";
+import LeaveMeeting from "./LeaveMeeting";
+import ChatWrapper from "./chats/ChatWrapper";
 import { SupabaseService } from "@/lib/supabase/SupabaseService";
 import { useAuth } from "@/contexts/AuthContext";
 import { usePresence } from "@/hooks/usePresence";

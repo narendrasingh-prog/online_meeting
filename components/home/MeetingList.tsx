@@ -1,14 +1,14 @@
 "use client";
 
 import { useState, useCallback, memo, Fragment } from "react";
-import HomeCard from "../Home-card";
-import MeetingModel from "../Meeting-model";
+import HomeCard from "../HomeCard";
+import MeetingModel from "../MeetingModel";
 import { MeetingService } from "@/services/MeetingService";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addHours } from "date-fns";
-import { MeetingType } from "../Meeting-model";
+import { MeetingType } from "../MeetingModel";
 import { useAuth } from "@/contexts/AuthContext";
 
 const MeetingList = () => {

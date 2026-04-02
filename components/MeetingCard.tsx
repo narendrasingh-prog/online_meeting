@@ -1,7 +1,7 @@
 import React from "react";
 
 
-import { Meeting } from "@/dto/Meetingtype";
+import { Meeting } from "@/dto/Meeting";
 import Link from "next/link";
 type MeetingCardProps = {
   meetings: Meeting[];

@@ -16,7 +16,7 @@ export async function subscribeToPush(userId: string) {
   });
   console.log("subscribe")
 
-  // Save subscription to Supabase or your own backend
+
    const res= await supabase.from("push_subscriptions").insert({
     user_id: userId,
     subscription

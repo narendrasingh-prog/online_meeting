@@ -1,8 +1,8 @@
 "use client";
 import  { useEffect, useState } from "react";
 
-import { Meeting } from "@/dto/Meetingtype";
-import UpcomingMeetingTimer from "./Upcoming-meeting-timer";
+import { Meeting } from "@/dto/Meeting";
+import UpcomingMeetingTimer from "./UpcommingMeetingTimer"
 import { useAuth } from "@/contexts/AuthContext";
 import { useQueryClient } from "@tanstack/react-query";
 

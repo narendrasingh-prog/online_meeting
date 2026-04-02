@@ -4,7 +4,7 @@ import type {
   CreateMeetingResponse,
   Meeting,
   MeetingPagination,
-} from "../dto/Meetingtype";
+} from "../dto/Meeting";
 import type { ApiResponse, ApiError } from "../types/ApiResponse";
 
 import { FileUpload } from "./StorageService";
@@ -12,7 +12,7 @@ import type {
   GetChats,
   GetUsers,
   GetYourMeeting,
-} from "../dto/MeetingInterface";
+} from "../dto/Meeting";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { SupabaseService } from "@/lib/supabase/SupabaseService";
 

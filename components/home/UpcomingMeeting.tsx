@@ -1,12 +1,12 @@
 "use client";
 import React, { Suspense } from "react";
 import { MeetingService } from "@/services/MeetingService";
-import MeetingCard from "../Meeting-card";
+import MeetingCard from "../MeetingCard";
 import { useAuth } from "@/contexts/AuthContext";
 import { useInView } from "react-intersection-observer";
 import useLazyLoading from "@/hooks/useLazyLoading";
 import { InfiniteData } from "@tanstack/react-query";
-import { Meeting, MeetingPagination } from "@/dto/Meetingtype";
+import { Meeting, MeetingPagination } from "@/dto/Meeting";
 import LoadingUpcoming from "@/app/(dashboard)/(home)/upcoming/loading";
 
 interface UpcomingMeetingProps {

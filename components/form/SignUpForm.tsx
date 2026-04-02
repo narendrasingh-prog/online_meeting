@@ -20,7 +20,7 @@ import { AuthSchema } from "@/types/Auth";
 import { AuthService } from "@/services/AuthService";
 import { toast } from "sonner";
 
-import FormError from "../Error/Form-error";
+import FormError from "../error/FormError";
 
 export function SignUpForm({
   className,

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { UserProfile } from "@/dto/Profiletype";
+import { UserProfile } from "@/dto/Profile";
 import { ProfileService } from "@/services/ProfileService";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "@tanstack/react-form";

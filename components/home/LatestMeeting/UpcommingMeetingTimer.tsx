@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { useAuth } from '@/contexts/AuthContext';
-import { Meeting } from '@/dto/Meetingtype';
+import { Meeting } from '@/dto/Meeting';
 import { useQueryClient } from '@tanstack/react-query';
 
 

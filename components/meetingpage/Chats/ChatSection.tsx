@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import type { Chats, Meeting } from "@/dto/Meetingtype";
+import type { Chats, Meeting } from "@/dto/Meeting";
 
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { MeetingService } from "@/services/MeetingService";

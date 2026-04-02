@@ -6,7 +6,7 @@ import { QueryClient } from "@tanstack/react-query";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { notFound } from "next/navigation";
 
-import MeetingPage from "@/components/meetingpage/Meeting-page";
+import MeetingPage from "@/components/meetingpage/MeetingPage";
 import { redirect } from "next/navigation";
 
 

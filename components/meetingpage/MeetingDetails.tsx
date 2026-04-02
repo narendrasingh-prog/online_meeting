@@ -1,5 +1,5 @@
 "use client";
-import { Meeting } from "@/dto/Meetingtype";
+import { Meeting } from "@/dto/Meeting";
 import { formatTime } from "@/lib/utils";
 import MeetingTime from "./MeetingTime";
 import { memo, Suspense } from "react";

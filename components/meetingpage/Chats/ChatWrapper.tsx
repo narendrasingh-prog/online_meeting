@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import ChatSection from './ChatSection'
-import SendMessage from './Send-message'
-import { Meeting } from '@/dto/Meetingtype'
+import SendMessage from './SendMessage'
+import { Meeting } from '@/dto/Meeting'
 interface ChatWrapperProps{
   meeting:Meeting
 }

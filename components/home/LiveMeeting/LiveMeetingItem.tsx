@@ -1,7 +1,7 @@
 "use client";
 
 import React, { memo } from "react";
-import { Meeting } from "@/dto/Meetingtype";
+import { Meeting } from "@/dto/Meeting";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { formatTime } from "@/lib/utils";

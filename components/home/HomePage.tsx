@@ -1,15 +1,15 @@
 "use client";
 import React, { Suspense } from "react";
 
-import { Meeting } from "@/dto/Meetingtype";
-import LatestMeeting from "./LatestMeeting/LatestMeeting";
+import { Meeting } from "@/dto/Meeting";
+import LatestMeeting from "./latestmeeting/LatestMeeting";
 import MeetingList from "./MeetingList";
 import { useQuery } from "@tanstack/react-query";
 import { MeetingService } from "@/services/MeetingService";
 import { useAuth } from "@/contexts/AuthContext";
 
 import Link from "next/link";
-import LiveMeeting from "./LiveMeeting/LiveMeeting";
+import LiveMeeting from "./livemeeting/LiveMeeting";
 
 interface HomePageProps {
   latestmeeting: Meeting | null;

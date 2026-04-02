@@ -6,6 +6,9 @@ export interface CreateMeetingRequest {
   endtime: string;
 }
 
+export interface CreateMeetingResponse {
+  meeting: Meeting;
+}
 export interface Meeting {
   id:number;
   host: string;
@@ -28,17 +31,11 @@ export interface Chats {
   image_url?: string | null;
 }
 
-export interface CreateMeetingResponse {
-  meeting: Meeting;
-}
-
 export interface Message {
   meetingId: number;
   message: string;
   image: File | null;
 }
-
-
 
 export interface MeetingPagination<T>{
   meetings:T[];
@@ -51,4 +48,27 @@ export interface MeetingPagination<T>{
   has_next:boolean;
   has_previous:boolean;
   
+}
+
+export interface GetUsers{
+  users:MeetingUser[];
+  total:number;
+  page:number;
+  page_limit:number;
+  total_pages:number;
+}
+
+export interface GetChats{
+  chats:Chats[];
+  total:number;
+  page:number;
+  has_prev_page:boolean;
+  has_next_page:boolean;
+  page_limit:number;
+  total_pages:number;
+}
+
+export interface GetYourMeeting<T>{
+  meetings:T,
+  total_count:number;
 }

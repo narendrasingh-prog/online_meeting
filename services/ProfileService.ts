@@ -2,7 +2,7 @@ import { SupabaseClient } from "@supabase/supabase-js";
 import { FileUpload } from "./StorageService";
 import { SupabaseService } from "@/lib/supabase/SupabaseService";
 import { ApiError, ApiResponse } from "@/types/ApiResponse";
-import { UserProfile } from "@/dto/Profiletype";
+import { UserProfile } from "@/dto/Profile";
 
 export class ProfileService {
   private supabase: SupabaseClient;

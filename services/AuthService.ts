@@ -67,10 +67,15 @@ export class AuthService {
     };
   }
   async getUsers(): Promise<User | null> {
-    const { data, error } = await this.supabase.auth.getUser();
-    if(error){
+    
+    try {
+      const { data, error } = await this.supabase.auth.getUser();
+      if(error){
+        return null;
+      }
+      return data.user;
+    } catch (error) {
       return null;
     }
-    return data.user;
   }
 }
