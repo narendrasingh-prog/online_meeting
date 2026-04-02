@@ -35,7 +35,7 @@ const ChatImage = ({ src }: { src: string }) => {
           fill
           className={`object-contain rounded-lg transition-opacity duration-300 ${
             isLoading ? "opacity-0" : "opacity-100"
-          }`}
+            }`}
           onLoad={() => setIsLoading(false)}
           onError={() => {
             setIsLoading(false);
@@ -48,13 +48,13 @@ const ChatImage = ({ src }: { src: string }) => {
 };
 
 function ChatSection({ meeting }: ChatSectionProps) {
- 
+
   const supabase = SupabaseService.browser();
 
 
   const [scrollRoot, setScrollRoot] = useState<HTMLDivElement | null>(null);
 
- 
+
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   // ✅ NEEDED: prevents multiple simultaneous fetchNextPage calls
@@ -82,22 +82,20 @@ function ChatSection({ meeting }: ChatSectionProps) {
     queryFn: async ({ pageParam = 1 }) => {
       const res = await meetingService.getChats({
         meetingid: meeting.id,
-        limit: 6, 
+        limit: 6,
         page: pageParam,
       });
       if (!res.success) throw new Error("failed to fetch chats");
       return res.data;
     },
     initialPageParam: 1,
-    // ✅ NEEDED: tells react-query whether another page exists
+
     getNextPageParam: (lastPage) =>
       lastPage.page < lastPage.total_pages ? lastPage.page + 1 : undefined,
     staleTime: 2 * 60 * 1000,
   });
 
-  // ✅ NEEDED: flattens all pages into a single array and removes duplicates.
-  // Duplicates can appear when realtime pushes a message that was already
-  // fetched in the next paginated call.
+
   const chats = useMemo(() => {
     if (!chatsData) return [];
     const seen = new Set();
@@ -111,16 +109,13 @@ function ChatSection({ meeting }: ChatSectionProps) {
     return unique;
   }, [chatsData]);
 
-  // ✅ NEEDED: sets scrollRoot once the div is mounted so useInView
-  // can use it as the intersection root instead of the viewport
   useEffect(() => {
     if (scrollRef.current) {
       setScrollRoot(scrollRef.current);
     }
   }, []);
 
-  // ✅ NEEDED: Supabase realtime listener — appends new incoming messages
-  // to the top of page[0] without refetching all pages
+
   useEffect(() => {
     const channel = supabase
       .channel(`meeting-chat-${meeting.id}`)
@@ -130,7 +125,6 @@ function ChatSection({ meeting }: ChatSectionProps) {
         queryClient.setQueryData(["meeting-chats", meeting.id], (old: any) => {
           if (!old) return old;
 
-          // prevent duplicate if already in cache
           const exists = old.pages.some((page: any) =>
             page.chats.some((chat: Chats) => chat.id === newMessage.id)
           );
@@ -153,17 +147,15 @@ function ChatSection({ meeting }: ChatSectionProps) {
     };
   }, [meeting.id]);
 
-  // ✅ NEEDED: triggers fetchNextPage when the sentinel div
-  // (topRef) scrolls into view inside the scroll container.
-  // Guards prevent duplicate concurrent fetches.
+
   useEffect(() => {
-    if (!inView) return;             // sentinel not visible, do nothing
-    if (!hasNextChatPage) return;    // no more pages to load
-    if (isLoadingRef.current) return; // already fetching, skip
+    if (!inView) return;
+    if (!hasNextChatPage) return;
+    if (isLoadingRef.current) return;
 
     isLoadingRef.current = true;
     fetchChatNextPage().finally(() => {
-      isLoadingRef.current = false;  // ✅ unlock immediately, no setTimeout needed
+      isLoadingRef.current = false;
     });
   }, [inView, hasNextChatPage, fetchChatNextPage]);
 
@@ -175,11 +167,7 @@ function ChatSection({ meeting }: ChatSectionProps) {
     <div className="shadow rounded-xl p-6 border h-[550px] flex max-w-full flex-col">
       <h2 className="text-lg font-semibold mb-4">Chat</h2>
 
-      {/*
-        ✅ flex-col-reverse: renders newest messages at the bottom visually.
-        This means the sentinel div (topRef) appears at the TOP of the chat,
-        so scrolling UP triggers it to load older messages.
-      */}
+
       <div
         ref={scrollRef}
         className="flex-1 overflow-y-auto flex flex-col-reverse space-y-4 space-y-reverse"
@@ -187,19 +175,17 @@ function ChatSection({ meeting }: ChatSectionProps) {
         {chats.map((chat) => (
           <div
             key={chat.id}
-            className={`flex flex-col ${
-              isMe(chat.sender_email) ? "items-end" : "items-start"
-            }`}
+            className={`flex flex-col ${isMe(chat.sender_email) ? "items-end" : "items-start"
+              }`}
           >
             <span className="text-xs text-gray-500 mb-1">
               {chat.sender_email}
             </span>
             <div
-              className={`p-3 rounded-lg max-w-xs ${
-                isMe(chat.sender_email)
+              className={`p-3 rounded-lg max-w-xs ${isMe(chat.sender_email)
                   ? "bg-blue-500 text-white rounded-br-none"
                   : "bg-gray-100 text-gray-900 rounded-bl-none"
-              }`}
+                }`}
             >
               {chat.message && (
                 <p className="text-sm break-words">{chat.message}</p>
@@ -209,12 +195,8 @@ function ChatSection({ meeting }: ChatSectionProps) {
           </div>
         ))}
 
-        {/*
-          ✅ NEEDED: sentinel element — sits at the top of the list (visually)
-          because of flex-col-reverse. When user scrolls up and this div
-          enters the viewport of scrollRoot, inView becomes true
-          and fetchNextPage is triggered.
-        */}
+
+
         <div ref={topRef} className="flex items-center justify-center w-full py-1">
           {isFetchingNextChatPage && (
             <p className="text-center text-xs text-gray-400">
