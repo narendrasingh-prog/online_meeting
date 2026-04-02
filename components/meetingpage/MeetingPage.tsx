@@ -129,7 +129,7 @@ const MeetingPage = ({ meeting }: { meeting: Meeting }) => {
     <Fragment>
       <section className="flex flex-col lg:flex-row justify-center">
         <LeaveMeeting meetingId={meeting.id} />
-        <Suspense fallback={<h1>Participants loading</h1>}>
+        <Suspense fallback={<h1>Participants loading....</h1>}>
           <Participants meeting={meeting} />
         </Suspense>
 

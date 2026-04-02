@@ -11,7 +11,7 @@ const MeetingDetails = ({ meeting, onleave }: MeetingDetailsProps) => {
   return (
     <div className="flex-1">
       <div className=" shadow rounded-xl p-6 border">
-        <Suspense fallback={<h1>loading time </h1>}>
+        <Suspense fallback={<h1>Loading meeting time...</h1>}>
           <MeetingTime meeting={meeting!} onleave={onleave} />
         </Suspense>
         <h2 className="text-xl font-semibold mb-2">Meeting Details</h2>
