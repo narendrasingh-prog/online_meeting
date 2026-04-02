@@ -1,19 +1,28 @@
 "use client";
-
 import React, { Suspense } from "react";
 import { MeetingService } from "@/services/MeetingService";
 import MeetingCard from "../Meeting-card";
 import { useAuth } from "@/contexts/AuthContext";
 import { useInView } from "react-intersection-observer";
 import useLazyLoading from "@/hooks/useLazyLoading";
+import { InfiniteData } from "@tanstack/react-query";
 import { Meeting, MeetingPagination } from "@/dto/Meetingtype";
 import LoadingUpcoming from "@/app/(dashboard)/(home)/upcoming/loading";
 
-const UpcomingMeeting = () => {
+interface UpcomingMeetingProps {
+  initialData?: InfiniteData<MeetingPagination<Meeting>>;
+  initialDataUpdatedAt?: number;
+}
+
+const UpcomingMeeting = ({
+  initialData,
+  initialDataUpdatedAt,
+}: UpcomingMeetingProps) => {
   const meetingService = MeetingService.Client();
   const { user } = useAuth();
 
   const { ref: bottomRef, inView } = useInView({ threshold: 0 });
+  const hasFetchedRef = React.useRef(false);
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
 
   const {
@@ -25,9 +34,11 @@ const UpcomingMeeting = () => {
     refetch,
     error,
   } = useLazyLoading<MeetingPagination<Meeting>>({
-    queryKey: ["upcomingmeetings", user?.id],
+    queryKey: ["upcomingmeetings"],
     initialPageParam: 1,
     enabled: !!user,
+    initialData,
+    initialDataUpdatedAt,
 
     fetchFn: async (pageParam) => {
       const res = await meetingService.getAllUpcommingMeeting({
@@ -50,10 +61,16 @@ const UpcomingMeeting = () => {
   });
 
   React.useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
+    if (!inView) {
+      hasFetchedRef.current = false;
+      return;
     }
-  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+    if (hasFetchedRef.current || !hasNextPage || isFetchingNextPage) return;
+
+    hasFetchedRef.current = true;
+    fetchNextPage();
+  }, [fetchNextPage, hasNextPage, inView, isFetchingNextPage]);
 
   if (!user) return <div>Loading user...</div>;
   // if (isLoading) return <div>Loading meetings...</div>;

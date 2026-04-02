@@ -5,13 +5,23 @@ import MeetingCard from "../Meeting-card";
 import { useInView } from "react-intersection-observer";
 import React, { Suspense } from "react";
 import useLazyLoading from "@/hooks/useLazyLoading";
+import { InfiniteData } from "@tanstack/react-query";
 import { Meeting, MeetingPagination } from "@/dto/Meetingtype";
 import LoadingPrevious from "@/app/(dashboard)/(home)/previous/loading";
 
-const PreviousMeeting = () => {
+interface PreviousMeetingProps {
+  initialData?: InfiniteData<MeetingPagination<Meeting>>;
+  initialDataUpdatedAt?: number;
+}
+
+const PreviousMeeting = ({
+  initialData,
+  initialDataUpdatedAt,
+}: PreviousMeetingProps) => {
   const meetingService = MeetingService.Client();
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const { ref: bottomRef, inView } = useInView({ threshold: 0 });
+  const hasFetchedRef = React.useRef(false);
 
   const {
     data,
@@ -24,6 +34,8 @@ const PreviousMeeting = () => {
   } = useLazyLoading<MeetingPagination<Meeting>>({
     queryKey: ["previousmeetings"],
     initialPageParam: 1,
+    initialData,
+    initialDataUpdatedAt,
 
     fetchFn: async (pageParam) => {
       const res = await meetingService.getAllCreatedMeeting({
@@ -48,10 +60,16 @@ const PreviousMeeting = () => {
   });
 
   React.useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
+    if (!inView) {
+      hasFetchedRef.current = false;
+      return;
     }
-  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+    if (hasFetchedRef.current || !hasNextPage || isFetchingNextPage) return;
+
+    hasFetchedRef.current = true;
+    fetchNextPage();
+  }, [fetchNextPage, hasNextPage, inView, isFetchingNextPage]);
 
   // if (isLoading) return <div>Loading meetings...</div>;
   if (error)

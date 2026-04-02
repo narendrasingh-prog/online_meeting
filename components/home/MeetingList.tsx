@@ -118,6 +118,8 @@ const MeetingList = () => {
       if (!data.title) return toast.error("Please enter a title");
       if (!data.start) return toast.error("Please enter a start time");
       if (!data.end) return toast.error("Please enter an end time");
+      const startMs = new Date(data.start).getTime();
+      if (startMs <= Date.now()) return toast.error("Scheduled start must be in the future");
       CreateScheduledMeeting.mutate({
         title: data.title,
         starttime: data.start,
@@ -139,33 +141,33 @@ const MeetingList = () => {
     [],
   );
   const handleClose = useCallback(() => setMeetingType("Idle"), []);
-console.log("meeting list rerender")
+  console.log("meeting list rerender")
   return (
     <Fragment>
-    <section className="grid grid-cols-1 gap-1 md:gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      <HomeCard
-        img="/icons/add-meeting.svg"
-        alt="add meeting"
-        title="Instant Meeting"
-        description="Start an instant meeting"
-        handleClick={handleInstantMeeting}
-      />
-      <HomeCard
-        img="/icons/schedule.svg"
-        alt="schedule"
-        title="Schedule Meeting"
-        description="Schedule a meeting"
-        handleClick={handleScheduleMeeting}
-      />
-      <HomeCard
-        img="/icons/join-meeting.svg"
-        alt="join meeting"
-        title="Join Meeting"
-        description="Join a meeting"
-        handleClick={handleJoinMeeting}
-      />
+      <section className="grid grid-cols-1 gap-1 md:gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <HomeCard
+          img="/icons/add-meeting.svg"
+          alt="add meeting"
+          title="Instant Meeting"
+          description="Start an instant meeting"
+          handleClick={handleInstantMeeting}
+        />
+        <HomeCard
+          img="/icons/schedule.svg"
+          alt="schedule"
+          title="Schedule Meeting"
+          description="Schedule a meeting"
+          handleClick={handleScheduleMeeting}
+        />
+        <HomeCard
+          img="/icons/join-meeting.svg"
+          alt="join meeting"
+          title="Join Meeting"
+          description="Join a meeting"
+          handleClick={handleJoinMeeting}
+        />
 
-    </section>
+      </section>
       <MeetingModel
         open={meetingType !== "Idle"}
         meetingType={typeofmeeting.type}

@@ -56,7 +56,7 @@ const LatestMeeting = ({ meeting }: LatestMeetingProps) => {
     };
     validateLiveMeetings();
 
-    const interval = setInterval(validateLiveMeetings, 60 * 1000);
+    const interval = setInterval(validateLiveMeetings, 30 * 1000);
     return () => clearInterval(interval);
   }, [user?.id]);
 

@@ -1,21 +1,31 @@
 import { useEffect, useState } from "react";
 
-export const useCountdown = (targetTime?: string | Date) => {
-  const [timeLeft, setTimeLeft] = useState(0);
+const toTimestamp = (value?: string | Date | number) => {
+  if (value === undefined || value === null) return null;
+  const timestamp = new Date(value).getTime();
+  return Number.isNaN(timestamp) ? null : timestamp;
+};
+
+const clampTime = (target: number) => Math.max(target - Date.now(), 0);
+
+export const useCountdown = (targetTime?: string | Date | number) => {
+  const [timeLeft, setTimeLeft] = useState(() => {
+    const target = toTimestamp(targetTime);
+    return target !== null ? clampTime(target) : 0;
+  });
 
   useEffect(() => {
-    if (!targetTime) return;
-
-    const target = new Date(targetTime).getTime();
+    const target = toTimestamp(targetTime);
+    if (target === null) {
+      setTimeLeft(0);
+      return;
+    }
 
     const update = () => {
-      const now = Date.now();
-      const diff = Math.max(target - now, 0);
-      setTimeLeft(diff);
+      setTimeLeft(clampTime(target));
     };
 
-    update(); 
-
+    update();
     const interval = setInterval(update, 1000);
     return () => clearInterval(interval);
   }, [targetTime]);

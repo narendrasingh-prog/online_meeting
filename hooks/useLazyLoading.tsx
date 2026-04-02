@@ -5,14 +5,15 @@ import {
 } from "@tanstack/react-query";
 
 interface LazyLoadingProps<T> {
-  queryKey: any[];
+  queryKey: readonly unknown[];
   fetchFn: (pageParam: number) => Promise<T>;
   enabled?: boolean;
   refetchOnMount?: boolean;
   refetchOnWindowFocus?: boolean;
   initialPageParam?: number;
-  
-  
+  initialData?: InfiniteData<T>;
+  initialDataUpdatedAt?: number;
+
   getNextPageParam?: (lastPage: T) => number | undefined;
   getPreviousPageParam?: (firstPage: T) => number | undefined;
 }
@@ -24,6 +25,8 @@ export default function useLazyLoading<T>({
   refetchOnWindowFocus = false,
   refetchOnMount = false,
   initialPageParam = 1,
+  initialData,
+  initialDataUpdatedAt,
   getNextPageParam,
   getPreviousPageParam,
 }: LazyLoadingProps<T>): UseInfiniteQueryResult<InfiniteData<T>, Error> {
@@ -31,6 +34,8 @@ export default function useLazyLoading<T>({
     queryKey,
     initialPageParam,
     queryFn: ({ pageParam = initialPageParam }) => fetchFn(pageParam as number),
+    initialData,
+    initialDataUpdatedAt,
 
     
     getNextPageParam: getNextPageParam ?? ((lastPage: any) => {

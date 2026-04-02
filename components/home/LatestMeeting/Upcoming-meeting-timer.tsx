@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext';
 import { Meeting } from '@/dto/Meetingtype';
 import { useQueryClient } from '@tanstack/react-query';
-import { useCountdown } from "@/hooks/useCountdown";
+
 
 interface UpcommingMeetingProps {
   getCurrentTime: () => void;
@@ -12,39 +12,50 @@ interface UpcommingMeetingProps {
 
 
 const UpcomingMeetingTimer = ({ getCurrentTime, meeting }: UpcommingMeetingProps) => {
-  const { hours, minutes, seconds, isFinished } = useCountdown(
-    meeting?.starttime
-  );
-
+  const [Upcomming, setUpcomming] = useState("");
   const { user } = useAuth();
   const queryClient = useQueryClient();
-
   useEffect(() => {
-    getCurrentTime();
+    const timer = setInterval(() => {
+      getCurrentTime();
 
-    if (!meeting || !isFinished) return;
+      if (meeting) {
+        const meetingTime = new Date(meeting.starttime).getTime();
+        const now = Date.now();
 
-    queryClient.setQueryData(
-      ["live-meeting", user?.id],
-      (oldData: Meeting[] | null | undefined) => {
-        if (!oldData) return [meeting];
-        const exists = oldData.some((m) => m.id === meeting.id);
-        if (exists) return oldData;
-        return [meeting, ...oldData];
+        const diff = meetingTime - now;
+        if (diff <= 0) {
+          setUpcomming("");
+          queryClient.setQueryData(
+            ["live-meeting", user?.id],
+            (oldData: Meeting[] | null | undefined) => {
+
+              if (!oldData) return [meeting];
+              const exists = oldData.some(m => m.id === meeting.id);
+              if (exists) return oldData;
+              return [meeting, ...oldData];
+            }
+          );
+          queryClient.invalidateQueries({ queryKey: ["latest-meeting", user?.id] });
+
+          return;
+        }
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        const formatted = `${hours}h ${minutes}m ${seconds}s`;
+        setUpcomming(formatted);
       }
-    );
+    }, 1000);
 
-    queryClient.invalidateQueries({
-      queryKey: ["latest-meeting", user?.id],
-    });
-  }, [isFinished, meeting]);
+    return () => clearInterval(timer);
+  }, [meeting]);
 
   return (
-    <h1 className='text-xl md:text-4xl text-center'>
-      {!isFinished
-        ? `"${meeting?.meetingtitle}" in ${hours}h ${minutes}m ${seconds}s`
-        : "No Upcoming Meeting"}
-    </h1>
+  <h1 className="glassmorphhism  max-w:-[270px] text-center text-lg font-normal  md:text-3xl ">
+      {Upcomming
+        ? `"${meeting?.meetingtitle}" meeting in  ${Upcomming}`
+        : "No Upcomming Meeting"} </h1>
   );
 };
 
