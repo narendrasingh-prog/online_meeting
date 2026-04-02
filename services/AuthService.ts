@@ -63,7 +63,7 @@ export class AuthService {
       return {error:true}
     }
     return {
-      error:true
+      error:false
     };
   }
   async getUsers(): Promise<User | null> {

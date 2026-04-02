@@ -9,7 +9,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import LeaveMeeting from "./Leave-meeting";
-import ChatWrapper from "./Chats/Chat-wrapper";
+import ChatWrapper from "./Chats/ChatWrapper";
 import { SupabaseService } from "@/lib/supabase/SupabaseService";
 import { useAuth } from "@/contexts/AuthContext";
 import { usePresence } from "@/hooks/usePresence";
@@ -33,7 +33,23 @@ const MeetingPage = ({ meeting }: { meeting: Meeting }) => {
 
   if (!user) return <h1>Loading...</h1>;
 
-  // 1) CREATE CHANNEL ONLY ONCE
+  
+  usePresence(channelRef, String(user.id), async (leftUserId) => {
+    const current = userIdRef.current;
+    
+    if (!current || leftUserId !== current) return;
+    if (hasLeftRef.current) return;
+    
+    hasLeftRef.current = true;
+    
+    await meetingService.leaveMeeting({
+      meetingid: meeting.id,
+      userid: current
+    });
+    
+    router.push("/");
+  });
+  
   useEffect(() => {
     const supabase = SupabaseService.browser();
 
@@ -59,24 +75,7 @@ const MeetingPage = ({ meeting }: { meeting: Meeting }) => {
     };
   }, []); 
 
-  // 2) PRESENCE LEAVE HANDLER
-  usePresence(channelRef, String(user.id), async (leftUserId) => {
-    const current = userIdRef.current;
 
-    if (!current || leftUserId !== current) return;
-    if (hasLeftRef.current) return;
-
-    hasLeftRef.current = true;
-
-    await meetingService.leaveMeeting({
-      meetingid: meeting.id,
-      userid: current
-    });
-
-    router.push("/");
-  });
-
-  // 3) TAB CLOSE / PAGE CLOSE
   useEffect(() => {
     const handler = (e: BeforeUnloadEvent) => {
       if (!hasLeftRef.current && userIdRef.current) {
@@ -92,7 +91,7 @@ const MeetingPage = ({ meeting }: { meeting: Meeting }) => {
     return () => window.removeEventListener("beforeunload", handler);
   }, []);
 
-  // 4) MANUAL LEAVE BUTTON
+
   const leaveMeetingMutation = useMutation({
     mutationFn: async ({ meetingId }: { meetingId: number }) => {
       const uid = userIdRef.current;

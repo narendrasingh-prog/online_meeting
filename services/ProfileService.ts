@@ -74,13 +74,13 @@ export class ProfileService {
   }
 
   public async updateProfile(args: {
-  fullname: string;
+  fullname?: string;
   avatarFile?: File;
 }): Promise<ApiResponse<UserProfile>> {
   let path: string | null = null;
   let signedUrl: string | null = null;
 
-  // ✅ Only run avatar upload if file is provided
+ 
   if (args.avatarFile) {
     try {
       path = await this.buildAvatarUrl(args.avatarFile);

@@ -177,7 +177,7 @@ useEffect(() => {
 
         <div
           ref={scrollRef}
-          className="flex-1 overflow-y-auto flex flex-col-reverse space-y-4 space-y-reverse py-2"
+          className="flex-1 overflow-y-auto flex flex-col-reverse space-y-4 space-y-reverse "
         >
           {chats.map((chat) => (
             <div

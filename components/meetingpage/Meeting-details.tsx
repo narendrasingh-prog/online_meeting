@@ -1,7 +1,7 @@
 "use client";
 import { Meeting } from "@/dto/Meetingtype";
 import { formatTime } from "@/lib/utils";
-import MeetingTime from "./Meeting-time";
+import MeetingTime from "./MeetingTime";
 import { memo, Suspense } from "react";
 interface MeetingDetailsProps {
   meeting: Meeting | null;
@@ -11,9 +11,9 @@ const MeetingDetails = ({ meeting, onleave }: MeetingDetailsProps) => {
   return (
     <div className="flex-1">
       <div className=" shadow rounded-xl p-6 border">
-        
+        <Suspense fallback={<h1>loading time </h1>}>
           <MeetingTime meeting={meeting!} onleave={onleave} />
-        
+        </Suspense>
         <h2 className="text-xl font-semibold mb-2">Meeting Details</h2>
 
         <div className="grid grid-cols-2 gap-4 text-sm">
