@@ -1,6 +1,6 @@
-// import { supabase } from "../supabaseConfig/SupabaseClient";
 
-import { SupabaseService } from "@/lib/supabase/SupabaseService";
+
+
 import { SupabaseClient } from "@supabase/supabase-js";
 
 export class FileUpload {

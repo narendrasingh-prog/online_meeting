@@ -109,7 +109,7 @@ export class MeetingService {
         code: (error as unknown as { code?: string }).code,
       });
     }
-    // console.log(meetingdetails)
+
     return {
       success: true,
       data: meetingdetails,
@@ -256,7 +256,7 @@ export class MeetingService {
         code: (error as unknown as { code?: string }).code,
       });
     }
-    // console.log(meetingdetails)
+    
     return {
       success: true,
       data: meetingdetails,

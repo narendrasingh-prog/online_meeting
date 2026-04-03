@@ -16,12 +16,17 @@ const DEFAULT_AVATAR =
 const Profile = ({ userData }: ProfileProps) => {
   const profileService = ProfileService.Client();
 
- 
+ console.log(userData)
   const initialFullnameRef = React.useRef(userData?.fullname ?? "");
 
   const [avatarUrl, setAvatarUrl] = React.useState(
     userData?.avatar_url ?? null,
   );
+
+  React.useEffect(() => {
+    initialFullnameRef.current = userData?.fullname ?? "";
+    setAvatarUrl(userData?.avatar_url ?? null);
+  }, [userData?.avatar_url, userData?.fullname]);
 
   const form = useForm({
     defaultValues: {

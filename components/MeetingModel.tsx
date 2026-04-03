@@ -27,7 +27,7 @@ interface MeetingModelProps {
   handleClick: (data: MeetingType) => void;
 }
 
-// InstantMeeting form
+
 const InstantMeetingForm = memo(
   ({
     loading,
@@ -109,7 +109,7 @@ const InstantMeetingForm = memo(
 );
 InstantMeetingForm.displayName = "InstantMeetingForm";
 
-// JoinMeeting form
+
 const JoinMeetingForm = memo(
   ({
     loading,
@@ -122,7 +122,7 @@ const JoinMeetingForm = memo(
     className?: string;
     onSubmit: (data: { link: string }) => void;
   }) => {
-    // const [link, setLink] = useState("");
+    
     const form = useForm({
       defaultValues: {
         link: "",

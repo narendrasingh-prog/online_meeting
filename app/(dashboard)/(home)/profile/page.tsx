@@ -12,7 +12,6 @@ const ProfilePage = async() => {
       
   return (
     <Suspense fallback={<UserLoading/>}>
-        
         <Profile userData={userData} />
     </Suspense>
   )

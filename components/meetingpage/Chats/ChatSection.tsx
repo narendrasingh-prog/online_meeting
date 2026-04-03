@@ -57,7 +57,7 @@ function ChatSection({ meeting }: ChatSectionProps) {
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
-  // ✅ NEEDED: prevents multiple simultaneous fetchNextPage calls
+
   const isLoadingRef = useRef(false);
 
   const { user } = useAuth();

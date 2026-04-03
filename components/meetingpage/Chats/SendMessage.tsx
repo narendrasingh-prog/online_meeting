@@ -29,7 +29,7 @@ const SendMessage = memo(({ meeting }: SendMessageProps) => {
       return res.data;
     },
     onSuccess: (chatData) => {
-      // ✅ prepend new message to first page
+     
       queryClient.setQueryData(["meeting-chats", meeting.id], (old: any) => {
         if (!old) return old;
         return {
@@ -45,7 +45,7 @@ const SendMessage = memo(({ meeting }: SendMessageProps) => {
       channel.send({
         type: "broadcast",
         event: "new_message",
-        payload: { message: chatData }, // chatData = full message object from API
+        payload: { message: chatData }, 
       });
 
   
